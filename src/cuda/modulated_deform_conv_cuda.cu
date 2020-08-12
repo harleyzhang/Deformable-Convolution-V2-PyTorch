@@ -39,11 +39,11 @@ modulated_deform_conv_cuda_forward(const at::Tensor &input,
     AT_ASSERTM(input.is_contiguous(), "input tensor has to be contiguous");
     AT_ASSERTM(weight.is_contiguous(), "weight tensor has to be contiguous");
 
-    AT_ASSERTM(input.type().is_cuda(), "input must be a CUDA tensor");
-    AT_ASSERTM(weight.type().is_cuda(), "weight must be a CUDA tensor");
-    AT_ASSERTM(bias.type().is_cuda(), "bias must be a CUDA tensor");
-    AT_ASSERTM(offset.type().is_cuda(), "offset must be a CUDA tensor");
-    AT_ASSERTM(mask.type().is_cuda(), "mask must be a CUDA tensor");
+    AT_ASSERTM(input.is_cuda(), "input must be a CUDA tensor");
+    AT_ASSERTM(weight.is_cuda(), "weight must be a CUDA tensor");
+    AT_ASSERTM(bias.is_cuda(), "bias must be a CUDA tensor");
+    AT_ASSERTM(offset.is_cuda(), "offset must be a CUDA tensor");
+    AT_ASSERTM(mask.is_cuda(), "mask must be a CUDA tensor");
 
     const int batch = input.size(0);
     const int channels = input.size(1);
@@ -143,11 +143,11 @@ std::vector<at::Tensor> modulated_deform_conv_cuda_backward(const at::Tensor &in
     AT_ASSERTM(input.is_contiguous(), "input tensor has to be contiguous");
     AT_ASSERTM(weight.is_contiguous(), "weight tensor has to be contiguous");
 
-    AT_ASSERTM(input.type().is_cuda(), "input must be a CUDA tensor");
-    AT_ASSERTM(weight.type().is_cuda(), "weight must be a CUDA tensor");
-    AT_ASSERTM(bias.type().is_cuda(), "bias must be a CUDA tensor");
-    AT_ASSERTM(offset.type().is_cuda(), "offset must be a CUDA tensor");
-    AT_ASSERTM(mask.type().is_cuda(), "mask must be a CUDA tensor");
+    AT_ASSERTM(input.is_cuda(), "input must be a CUDA tensor");
+    AT_ASSERTM(weight.is_cuda(), "weight must be a CUDA tensor");
+    AT_ASSERTM(bias.is_cuda(), "bias must be a CUDA tensor");
+    AT_ASSERTM(offset.is_cuda(), "offset must be a CUDA tensor");
+    AT_ASSERTM(mask.is_cuda(), "mask must be a CUDA tensor");
 
     const int batch = input.size(0);
     const int channels = input.size(1);

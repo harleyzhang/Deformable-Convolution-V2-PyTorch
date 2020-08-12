@@ -38,10 +38,10 @@ deform_conv_cuda_forward(const at::Tensor &input,
     AT_ASSERTM(input.is_contiguous(), "input tensor has to be contiguous");
     AT_ASSERTM(weight.is_contiguous(), "weight tensor has to be contiguous");
 
-    AT_ASSERTM(input.type().is_cuda(), "input must be a CUDA tensor");
-    AT_ASSERTM(weight.type().is_cuda(), "weight must be a CUDA tensor");
-    AT_ASSERTM(bias.type().is_cuda(), "bias must be a CUDA tensor");
-    AT_ASSERTM(offset.type().is_cuda(), "offset must be a CUDA tensor");
+    AT_ASSERTM(input.is_cuda(), "input must be a CUDA tensor");
+    AT_ASSERTM(weight.is_cuda(), "weight must be a CUDA tensor");
+    AT_ASSERTM(bias.is_cuda(), "bias must be a CUDA tensor");
+    AT_ASSERTM(offset.is_cuda(), "offset must be a CUDA tensor");
 
     const int batch = input.size(0);
     const int channels = input.size(1);
@@ -87,7 +87,7 @@ deform_conv_cuda_forward(const at::Tensor &input,
     for (int n = 0; n < batch/im2col_step_; ++n)
     {
         auto columns = at::empty({channels * kernel_h * kernel_w, batch_n * height_out * width_out}, input.options());
-        AT_DISPATCH_FLOATING_TYPES(input.type(), "deform_conv_forward_cuda", ([&] {
+        AT_DISPATCH_FLOATING_TYPES(input.scalar_type(), "deform_conv_forward_cuda", ([&] {
             deformable_im2col_cuda(at::cuda::getCurrentCUDAStream(),
                                              input.data<scalar_t>() + n * im2col_step_ * per_input_size,
                                              offset.data<scalar_t>() + n * im2col_step_ * per_offset_size,
@@ -140,10 +140,10 @@ std::vector<at::Tensor> deform_conv_cuda_backward(const at::Tensor &input,
     AT_ASSERTM(input.is_contiguous(), "input tensor has to be contiguous");
     AT_ASSERTM(weight.is_contiguous(), "weight tensor has to be contiguous");
 
-    AT_ASSERTM(input.type().is_cuda(), "input must be a CUDA tensor");
-    AT_ASSERTM(weight.type().is_cuda(), "weight must be a CUDA tensor");
-    AT_ASSERTM(bias.type().is_cuda(), "bias must be a CUDA tensor");
-    AT_ASSERTM(offset.type().is_cuda(), "offset must be a CUDA tensor");
+    AT_ASSERTM(input.is_cuda(), "input must be a CUDA tensor");
+    AT_ASSERTM(weight.is_cuda(), "weight must be a CUDA tensor");
+    AT_ASSERTM(bias.is_cuda(), "bias must be a CUDA tensor");
+    AT_ASSERTM(offset.is_cuda(), "offset must be a CUDA tensor");
 
     const int batch = input.size(0);
     const int channels = input.size(1);
@@ -216,7 +216,7 @@ std::vector<at::Tensor> deform_conv_cuda_backward(const at::Tensor &input,
             columns_g.select(0, g) = at::mm(weight_gm, grad_output_gm);
         }
 
-        AT_DISPATCH_FLOATING_TYPES(input.type(), "deform_conv_backward_cuda", ([&] {
+        AT_DISPATCH_FLOATING_TYPES(input.scalar_type(), "deform_conv_backward_cuda", ([&] {
             deformable_col2im_coord_cuda(at::cuda::getCurrentCUDAStream(),
                                                    columns.data<scalar_t>(),
                                                    input.data<scalar_t>() + n * im2col_step_ * per_input_size,
