@@ -54,10 +54,10 @@ def get_extensions():
     return ext_modules
 
 setup(
-    name="DCN",
-    version="1.0",
-    author="xvjiarui",
-    url="https://github.com/charlesshang/DCNv2",
+    name="dfconv2",
+    version="0.1",
+    author="xvjiarui, honglei",
+    url="https://github.com/harleyzhang/Deformable-Convolution-V2-PyTorch",
     description="deformable convolutional networks",
     packages=find_packages(exclude=("configs", "tests",)),
     # install_requires=requirements,
