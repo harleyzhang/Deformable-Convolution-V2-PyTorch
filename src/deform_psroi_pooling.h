@@ -20,7 +20,7 @@ deform_psroi_pooling_forward(const at::Tensor &input,
                              const int sample_per_part,
                              const float trans_std)
 {
-    if (input.type().is_cuda())
+    if (input.is_cuda())
     {
 #ifdef WITH_CUDA
         return deform_psroi_pooling_cuda_forward(input,
@@ -56,7 +56,7 @@ deform_psroi_pooling_backward(const at::Tensor &out_grad,
                               const int sample_per_part,
                               const float trans_std)
 {
-    if (input.type().is_cuda())
+    if (input.is_cuda())
     {
 #ifdef WITH_CUDA
         return deform_psroi_pooling_cuda_backward(out_grad,

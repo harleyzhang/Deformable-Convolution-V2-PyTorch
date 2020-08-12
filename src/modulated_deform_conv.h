@@ -25,7 +25,7 @@ modulated_deform_conv_forward(const at::Tensor &input,
                const int deformable_group,
                const int im2col_step)
 {
-    if (input.type().is_cuda())
+    if (input.is_cuda())
     {
 #ifdef WITH_CUDA
         return modulated_deform_conv_cuda_forward(input, weight, bias, offset, mask,
@@ -62,7 +62,7 @@ modulated_deform_conv_backward(const at::Tensor &input,
                 const int deformable_group,
                 const int im2col_step)
 {
-    if (input.type().is_cuda())
+    if (input.is_cuda())
     {
 #ifdef WITH_CUDA
         return modulated_deform_conv_cuda_backward(input,
