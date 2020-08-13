@@ -12,9 +12,16 @@ from torch.nn.modules.utils import _pair
 from ..functions.deform_conv_func import DeformConvFunction
 
 class DeformConv(nn.Module):
-
     def __init__(self, in_channels, out_channels,
                  kernel_size, stride, padding, dilation=1, groups=1, deformable_groups=1, im2col_step=64, bias=True):
+        ''' init function
+
+        Parameters
+        ----------
+        in_channels, out_channels, kernel_size, stride, padding, dilation, groups: same parameters as torch::Conv2d
+        deformable_groups:
+        im2col_step:
+        '''
         super(DeformConv, self).__init__()
 
         if in_channels % groups != 0:
